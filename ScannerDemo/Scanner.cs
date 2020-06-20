@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using WIA;
 using System.Windows.Forms;
 using System.IO;
+using iTextSharp;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 
 namespace ScannerDemo
 {
@@ -64,11 +67,13 @@ namespace ScannerDemo
         /// Scan a image with PNG Format
         /// </summary>
         /// <returns></returns>
-        public ImageFile ScanPNG()
+        public Images ScanPNG()
         {
             // Connect to the device and instruct it to scan
             // Connect to the device
             var device = this._deviceInfo.Connect();
+
+            Images images = new Images();
 
             // Select the scanner
             CommonDialogClass dlg = new CommonDialogClass(); 
@@ -84,9 +89,9 @@ namespace ScannerDemo
                 if(scanResult != null)
                 {
                     var imageFile = (ImageFile)scanResult;
-
+                    images.add(imageFile);
                     // Return the imageFile
-                    return imageFile;
+                    return images;
                 }
             }
             catch (COMException e)
@@ -109,14 +114,14 @@ namespace ScannerDemo
                 }
             }
 
-            return new ImageFile();
+            return images;
         }
 
         /// <summary>
         /// Scan a image with JPEG Format
         /// </summary>
         /// <returns></returns>
-        public ImageFile ScanJPEG()
+        public Images ScanJPEG()
         {
             // Connect to the device and instruct it to scan
             // Connect to the device
@@ -127,6 +132,8 @@ namespace ScannerDemo
 
             var item = device.Items[1];
 
+            Images images = new Images();
+
             try
             {
                 AdjustScannerSettings(item, resolution, 0, 0, width_pixel, height_pixel, 0, 0, color_mode);
@@ -136,9 +143,10 @@ namespace ScannerDemo
                 if (scanResult != null)
                 {
                     var imageFile = (ImageFile)scanResult;
+                    images.add(imageFile);
 
                     // Return the imageFile
-                    return imageFile;
+                    return images;
                 }
             }
             catch (COMException e)
@@ -163,14 +171,14 @@ namespace ScannerDemo
                 }
             }
 
-            return new ImageFile();
+            return images;
         }
 
         /// <summary>
         /// Scan a image with TIFF Format
         /// </summary>
-        /// <returns></returns>
-        public ImageFile ScanTIFF()
+        /// <returns> Images </returns>
+        public Images ScanTIFF()
         {
             // Connect to the device and instruct it to scan
             // Connect to the device
@@ -180,6 +188,8 @@ namespace ScannerDemo
             CommonDialogClass dlg = new CommonDialogClass();
 
             var item = device.Items[1];
+
+            Images images = new Images();
 
             try
             {
@@ -191,8 +201,10 @@ namespace ScannerDemo
                 {
                     var imageFile = (ImageFile)scanResult;
 
+                    images.add(imageFile);
+
                     // Return the imageFile
-                    return imageFile;
+                    return images;
                 }
             }
             catch (COMException e)
@@ -217,7 +229,122 @@ namespace ScannerDemo
                 }
             }
 
-            return new ImageFile();
+            return images;
+        }
+
+        /// <summary>
+        ///  Scan multi-paged document 
+        /// </summary>
+        /// <returns>Images</returns>
+        public Images ADFScan()
+        {
+
+            //Choose Scanner
+            CommonDialogClass class1 = new CommonDialogClass();
+            Images images = new Images();
+            Device d = class1.ShowSelectDevice(WiaDeviceType.UnspecifiedDeviceType, true, false);
+            if (d != null)
+            {
+                this.DeviceID = d.DeviceID;
+            }
+            else
+            {
+                //no scanner chosen
+                return null;
+            }
+
+
+
+            WIA.CommonDialog WiaCommonDialog = new CommonDialogClass();
+
+            bool hasMorePages = true;
+            int x = 0;
+            int numPages = 0;
+            ImageFile res = null;
+            while (hasMorePages)
+            {
+                //Create DeviceManager
+                DeviceManager manager = new DeviceManagerClass();
+                Device WiaDev = null;
+                foreach (DeviceInfo info in manager.DeviceInfos)
+                {
+                    if (info.DeviceID == this.DeviceID)
+                    {
+                        WIA.Properties infoprop = null;
+                        infoprop = info.Properties;
+
+                        //connect to scanner
+                        WiaDev = info.Connect();
+
+                        break;
+                    }
+                }
+
+                //Start Scan
+
+                WIA.ImageFile img = null;
+                WIA.Item Item = WiaDev.Items[1] as WIA.Item;
+
+                try
+                {
+
+                    img = (ImageFile)WiaCommonDialog.ShowTransfer(Item, wiaFormatJPEG, false);
+                    res = img;
+
+
+                    //process image:
+                    //one would do image processing here
+                    //
+
+                    //Save to file
+                    //string varimagefilename = "c:\\test" + x.tostring() + ".jpg";
+                    //if (file.exists(varimagefilename))
+                    //{
+                    //    //file exists, delete it
+                    //    file.delete(varimagefilename);
+                    //}
+                    //img.savefile(varimagefilename);
+
+                    images.add(res);
+
+                    numPages++;
+                    img = null;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+                finally
+                {
+                    Item = null;
+                    //determine if there are any more pages waiting
+                    Property documentHandlingSelect = null;
+                    Property documentHandlingStatus = null;
+                    foreach (Property prop in WiaDev.Properties)
+                    {
+                        if (prop.PropertyID == WIA_PROPERTIES.WIA_DPS_DOCUMENT_HANDLING_SELECT)
+                            documentHandlingSelect = prop;
+                        if (prop.PropertyID == WIA_PROPERTIES.WIA_DPS_DOCUMENT_HANDLING_STATUS)
+                            documentHandlingStatus = prop;
+
+
+                    }
+
+                    hasMorePages = false; //assume there are no more pages
+                    if (documentHandlingSelect != null)
+                    //may not exist on flatbed scanner but required for feeder
+                    {
+                        //check for document feeder
+                        if ((Convert.ToUInt32(documentHandlingSelect.get_Value()) & WIA_DPS_DOCUMENT_HANDLING_SELECT.FEEDER) != 0)
+                        {
+                            hasMorePages = ((Convert.ToUInt32(documentHandlingStatus.get_Value()) & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0);
+                        }
+                    }
+                    x++;
+                }
+            }
+            return images;
         }
 
         /// <summary>
@@ -273,117 +400,6 @@ namespace ScannerDemo
         public override string ToString()
         {
             return (string) this._deviceInfo.Properties["Name"].get_Value();
-        }
-
-
-        public ImageFile ADFScan()
-        {
-
-            //Choose Scanner
-            CommonDialogClass class1 = new CommonDialogClass();
-            Device d = class1.ShowSelectDevice(WiaDeviceType.UnspecifiedDeviceType, true, false);
-            if (d != null)
-            {
-                this.DeviceID = d.DeviceID;
-            }
-            else
-            {
-                //no scanner chosen
-                return null;
-            }
-
-
-
-            WIA.CommonDialog WiaCommonDialog = new CommonDialogClass();
-
-            bool hasMorePages = true;
-            int x = 0;
-            int numPages = 0;
-            ImageFile res = null;
-            while (hasMorePages)
-            {
-                //Create DeviceManager
-                DeviceManager manager = new DeviceManagerClass();
-                Device WiaDev = null;
-                foreach (DeviceInfo info in manager.DeviceInfos)
-                {
-                    if (info.DeviceID == this.DeviceID)
-                    {
-                        WIA.Properties infoprop = null;
-                        infoprop = info.Properties;
-
-                        //connect to scanner
-                        WiaDev = info.Connect();
-
-
-                        break;
-                    }
-                }
-
-
-
-                //Start Scan
-
-                WIA.ImageFile img = null;
-                WIA.Item Item = WiaDev.Items[1] as WIA.Item;
-
-                try
-                {
-
-                    img = (ImageFile)WiaCommonDialog.ShowTransfer(Item, wiaFormatJPEG, false);
-                    res = img;
-
-
-                    //process image:
-                    //one would do image processing here
-                    //
-
-                    //Save to file
-                    //string varimagefilename = "c:\\test" + x.tostring() + ".jpg";
-                    //if (file.exists(varimagefilename))
-                    //{
-                    //    //file exists, delete it
-                    //    file.delete(varimagefilename);
-                    //}
-                    //img.savefile(varimagefilename);
-                    numPages++;
-                    img = null;
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
-                finally
-                {
-                    Item = null;
-                    //determine if there are any more pages waiting
-                    Property documentHandlingSelect = null;
-                    Property documentHandlingStatus = null;
-                    foreach (Property prop in WiaDev.Properties)
-                    {
-                        if (prop.PropertyID == WIA_PROPERTIES.WIA_DPS_DOCUMENT_HANDLING_SELECT)
-                            documentHandlingSelect = prop;
-                        if (prop.PropertyID == WIA_PROPERTIES.WIA_DPS_DOCUMENT_HANDLING_STATUS)
-                            documentHandlingStatus = prop;
-
-
-                    }
-
-                    hasMorePages = false; //assume there are no more pages
-                    if (documentHandlingSelect != null)
-                    //may not exist on flatbed scanner but required for feeder
-                    {
-                        //check for document feeder
-                        if ((Convert.ToUInt32(documentHandlingSelect.get_Value()) & WIA_DPS_DOCUMENT_HANDLING_SELECT.FEEDER) != 0)
-                        {
-                            hasMorePages = ((Convert.ToUInt32(documentHandlingStatus.get_Value()) & WIA_DPS_DOCUMENT_HANDLING_STATUS.FEED_READY) != 0);
-                        }
-                    }
-                    x++;
-                }
-            }
-            return res;
         }
     }
 }

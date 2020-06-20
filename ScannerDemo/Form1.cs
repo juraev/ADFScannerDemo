@@ -88,7 +88,7 @@ namespace ScannerDemo
                 return;
             }
 
-            ImageFile image = new ImageFile();
+            Images images = new Images();
             string imageExtension = "";
 
             this.Invoke(new MethodInvoker(delegate ()
@@ -96,32 +96,40 @@ namespace ScannerDemo
                 switch (comboBox1.SelectedIndex)
                 {
                     case 0:
-                        image = device.ScanPNG();
+                        images = device.ScanPNG();
                         imageExtension = ".png";
                         break;
                     case 1:
-                        image = device.ADFScan();
+                        images = device.ScanJPEG();
                         imageExtension = ".jpeg";
                         break;
                     case 2:
-                        image = device.ScanTIFF();
+                        images = device.ScanTIFF();
                         imageExtension = ".tiff";
+                        break;
+                    case 3:
+                        images = device.ADFScan();
+                        imageExtension = ".jpeg";
                         break;
                 }
             }));
-            
-            
-            // Save the image
-            var path = Path.Combine(textBox1.Text, textBox2.Text + imageExtension);
 
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
 
-            image.SaveFile(path);
+            ImagesToPDFConverter converter = new ImagesToPDFConverter(images);
 
-            pictureBox1.Image = new Bitmap(path);
+            converter.getPDF();
+
+            //// Save the image
+            //var path = Path.Combine(textBox1.Text, textBox2.Text + imageExtension);
+
+            //if (File.Exists(path))
+            //{
+            //    File.Delete(path);
+            //}
+
+            //image.SaveFile(path);
+
+            //pictureBox1.Image = new Bitmap(path);
         }
 
         private void button2_Click(object sender, EventArgs e)
