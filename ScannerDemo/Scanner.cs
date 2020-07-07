@@ -13,7 +13,6 @@ using iTextSharp.text;
 
 namespace ScannerDemo
 {
-
     class WIA_DPS_DOCUMENT_HANDLING_SELECT
     {
         public const uint FEEDER = 0x00000001;

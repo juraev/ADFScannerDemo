@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WIA;
@@ -14,9 +8,20 @@ namespace ScannerDemo
 {
     public partial class Form1 : Form
     {
+        private AsynchronousSocketListener mContext;
+        public delegate void AddListItem();
+        public AddListItem myDelegate;
+        string name = "myscan";
+
         public Form1()
         {
             InitializeComponent();
+            myDelegate = new AddListItem(AddListItemMethod);
+        }
+
+        private void AddListItemMethod()
+        {
+            this.Close();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -25,9 +30,11 @@ namespace ScannerDemo
 
             // Set start output folder TMP
             textBox1.Text = Path.GetTempPath();
-            // Set JPEG as default
-            comboBox1.SelectedIndex = 1;
+        }
 
+        public void SetContext(AsynchronousSocketListener context)
+        {
+            mContext = context;
         }
 
         private void ListScanners()
@@ -80,55 +87,49 @@ namespace ScannerDemo
                                 "Warning",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }else if(String.IsNullOrEmpty(textBox2.Text))
-            {
-                MessageBox.Show("Provide a filename",
-                                "Warning",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
             }
 
             Images images = new Images();
-            string imageExtension = "";
 
             this.Invoke(new MethodInvoker(delegate ()
             {
-                switch (comboBox1.SelectedIndex)
+                switch (3)
                 {
                     case 0:
                         images = device.ScanPNG();
-                        imageExtension = ".png";
                         break;
                     case 1:
                         images = device.ScanJPEG();
-                        imageExtension = ".jpeg";
                         break;
                     case 2:
                         images = device.ScanTIFF();
-                        imageExtension = ".tiff";
                         break;
                     case 3:
                         images = device.ADFScan();
-                        imageExtension = ".jpeg";
                         break;
                 }
             }));
 
+            //// Save the doc
+            string docExtension = ".pdf";
+
+            var path = Path.Combine(textBox1.Text, name + docExtension);
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
 
             ImagesToPDFConverter converter = new ImagesToPDFConverter(images);
 
-            converter.getPDF();
-
-            //// Save the image
-            //var path = Path.Combine(textBox1.Text, textBox2.Text + imageExtension);
-
-            //if (File.Exists(path))
-            //{
-            //    File.Delete(path);
-            //}
-
-            //image.SaveFile(path);
-
+            if (images != null && images.size() > 0)
+            {
+                converter.getPDF(path.ToString());
+                emitPath(true);
+            } else
+            {
+                emitPath(false);
+            }
             //pictureBox1.Image = new Bitmap(path);
         }
 
@@ -143,6 +144,18 @@ namespace ScannerDemo
                 textBox1.Text = folderDlg.SelectedPath;
             }
         }
-         
+
+        void emitPath(bool success)
+        {
+            if(success)
+                mContext.setDocumentPath(textBox1.Text + "\\" + name + ".pdf");
+            else
+                mContext.setDocumentPath("--Unsuccessfull: scanning is not finished--");
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

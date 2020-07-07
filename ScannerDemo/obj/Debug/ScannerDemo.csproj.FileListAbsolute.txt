@@ -15,7 +15,6 @@ C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\ScannerD
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\ScannerDemo.exe
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\ScannerDemo.pdb
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\Interop.WIA.dll
-C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\ScannerDemo.csprojAssemblyReference.cache
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\Interop.WIA.dll
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\ScannerDemo.csproj.ResolveComReference.cache
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\ScannerDemo.Form1.resources
@@ -53,3 +52,4 @@ C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\itext.sv
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\ScannerDemo.csproj.CopyComplete
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\itextsharp.dll
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\itextsharp.xml
+C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\Interop.IWshRuntimeLibrary.dll

@@ -19,11 +19,10 @@ namespace ScannerDemo
             this.mImages = images;
         }
 
-        public void getPDF()
+        public void getPDF(string path)
         {
             Document doc = new Document();
-
-            using (var stream = new FileStream("C:\\Users\\gitarist\\Downloads\\img.pdf", FileMode.Create, FileAccess.Write, FileShare.None))
+            using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 PdfWriter writer = PdfWriter.GetInstance(doc, stream);
                 doc.Open();
@@ -38,25 +37,3 @@ namespace ScannerDemo
         }
     }
 }
-
-
-//public void Doconvert()
-//{
-//    Document doc = new Document();
-
-//    using (var stream = new FileStream("C:\\Users\\gitarist\\Downloads\\img.pdf", FileMode.Create, FileAccess.Write, FileShare.None))
-//    {
-//        PdfWriter writer = PdfWriter.GetInstance(doc, stream);
-//        doc.Open();
-//        for (int i = 1; i <= 15; i++)
-//        {
-//            string s = "C:\\Users\\gitarist\\Downloads\\img (" + i + ").jpg";
-//            using (var imgStream = new FileStream(s, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-//            {
-//                var image = Image.GetInstance(imgStream);
-//                doc.Add(image);
-//            }
-//        }
-//        doc.Close();
-//    }
-//}

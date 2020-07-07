@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScannerDemo", "ScannerDemo\ScannerDemo.csproj", "{346DBA90-52EB-4E4F-A899-07778C14F8F2}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Simplex Scanner App Setup", "Simplex Scanner App Setup\Simplex Scanner App Setup.vdproj", "{F4936F3E-CEDF-4F10-A7AB-F2C7470A8B27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{346DBA90-52EB-4E4F-A899-07778C14F8F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{346DBA90-52EB-4E4F-A899-07778C14F8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{346DBA90-52EB-4E4F-A899-07778C14F8F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4936F3E-CEDF-4F10-A7AB-F2C7470A8B27}.Debug|Any CPU.ActiveCfg = Debug
+		{F4936F3E-CEDF-4F10-A7AB-F2C7470A8B27}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

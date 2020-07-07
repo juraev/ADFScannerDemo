@@ -1,5 +1,4 @@
-﻿using iText.Layout.Element;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +25,11 @@ namespace ScannerDemo
         public bool hasNext()
         {
             return images.Count > 0;
+        }
+
+        public int size()
+        {
+            return images.Count;
         }
 
         public MemoryStream getNextImage()
