@@ -352,7 +352,7 @@
         "Entry"
         {
         "MsmKey" = "8:_BB0DD29461D4473C143DD541CD7B7AEE"
-        "OwnerKey" = "8:_FDF86FF903E0E32533F8FA62538F8626"
+        "OwnerKey" = "8:_EA4986DCDA5BB60D850F412D81722AF1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -364,6 +364,18 @@
         "Entry"
         {
         "MsmKey" = "8:_E810C744757B759D7846FBA4A7E402F9"
+        "OwnerKey" = "8:_7405F4FB73624B2BB58519263E8F20B2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EA4986DCDA5BB60D850F412D81722AF1"
+        "OwnerKey" = "8:_0F8816BA47E74EDCA7087C7940CB9AB1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EA4986DCDA5BB60D850F412D81722AF1"
         "OwnerKey" = "8:_7405F4FB73624B2BB58519263E8F20B2"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -447,20 +459,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FDF86FF903E0E32533F8FA62538F8626"
-        "OwnerKey" = "8:_0F8816BA47E74EDCA7087C7940CB9AB1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FDF86FF903E0E32533F8FA62538F8626"
-        "OwnerKey" = "8:_7405F4FB73624B2BB58519263E8F20B2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A448C333F7E695359CA0EED2DCE9A2DA"
+        "OwnerKey" = "8:_0F8816BA47E74EDCA7087C7940CB9AB1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -472,13 +472,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0F8816BA47E74EDCA7087C7940CB9AB1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FDF86FF903E0E32533F8FA62538F8626"
+        "OwnerKey" = "8:_EA4986DCDA5BB60D850F412D81722AF1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -559,6 +553,12 @@
         "OwnerKey" = "8:_F37EF7E8DD1E1051E5D7D9CAC03AF3D9"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A448C333F7E695359CA0EED2DCE9A2DA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -577,6 +577,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -593,6 +609,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -1070,6 +1102,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EA4986DCDA5BB60D850F412D81722AF1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Interop.WIA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_EA4986DCDA5BB60D850F412D81722AF1"
+                    {
+                    "Name" = "8:Interop.WIA.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Interop.WIA.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7095525FB61042EAA75FE3FE3EDB4579"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F046D2F03739D6792C5064780C705325"
             {
             "AssemblyRegister" = "3:1"
@@ -1115,37 +1178,6 @@
                     }
                 }
             "SourcePath" = "8:Common.Logging.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7095525FB61042EAA75FE3FE3EDB4579"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FDF86FF903E0E32533F8FA62538F8626"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Interop.WIA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FDF86FF903E0E32533F8FA62538F8626"
-                    {
-                    "Name" = "8:Interop.WIA.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Interop.WIA.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7095525FB61042EAA75FE3FE3EDB4579"
@@ -1231,7 +1263,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Simplex Scanner App Setup"
         "ProductCode" = "8:{2C0F421F-8A92-44FD-893E-4E259E6E864D}"
-        "PackageCode" = "8:{406EE07C-3E19-4908-AF3E-0697E3062775}"
+        "PackageCode" = "8:{49C3FDE1-C21B-4844-9211-E655B8FEFB9C}"
         "UpgradeCode" = "8:{2F100345-02EB-41EB-8970-B951B5BB6F4A}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -1766,7 +1798,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0F8816BA47E74EDCA7087C7940CB9AB1"
             {
-            "SourcePath" = "8:..\\ScannerDemo\\obj\\Debug\\ScannerDemo.exe"
+            "SourcePath" = "8:..\\ScannerDemo\\obj\\Release\\ScannerDemo.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7095525FB61042EAA75FE3FE3EDB4579"
@@ -1794,7 +1826,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7405F4FB73624B2BB58519263E8F20B2"
             {
-            "SourcePath" = "8:..\\ScannerDemo\\obj\\Debug\\ScannerDemo.exe"
+            "SourcePath" = "8:..\\ScannerDemo\\obj\\Release\\ScannerDemo.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2F2AC7A479254312B151127EB6F9CCD1"

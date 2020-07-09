@@ -53,3 +53,4 @@ C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\ScannerD
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\itextsharp.dll
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\bin\Debug\itextsharp.xml
 C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\Interop.IWshRuntimeLibrary.dll
+C:\Users\gitarist\Desktop\Projects\adfscannerdemo\ScannerDemo\obj\Debug\ScannerDemo.csprojAssemblyReference.cache

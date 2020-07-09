@@ -22,7 +22,10 @@ namespace ScannerDemo
             string startupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
             Trace.Write(startupFolder + "\n");
             string[] arguments = Environment.GetCommandLineArgs();
-
+            
+            if (arguments.Length > 2)
+                return;
+            
             if (arguments.Length == 2)
             {
                 createShortCut();
@@ -35,10 +38,17 @@ namespace ScannerDemo
                 return;
             }
 
-            MyScannerService service = new MyScannerService();
-            Thread thread = service.getThread();
-            service.startListening();
-            thread.Join();
+
+            while (true)
+            {
+                
+                MyScannerService service = new MyScannerService();
+                Thread thread = service.getThread();
+                service.startListening();
+                thread.Join();
+                Thread.Sleep(100);
+                Trace.Write("New Scanner Service");
+            }
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);

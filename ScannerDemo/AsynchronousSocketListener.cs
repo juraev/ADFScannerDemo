@@ -145,7 +145,6 @@ namespace ScannerDemo
                             mContext.log("waiting");
                         }
 
-
                         if (!theFormIsClosed)
                         {
                             form.Invoke(form.myDelegate);
@@ -163,13 +162,21 @@ namespace ScannerDemo
                     {
                         // The scanner is busy
                         Send(handler, "--Unsuccessfull: the program is busy--");
+                        doWeHaveTheDocPath = false;
                     }
                 }
                 else
                 {
                     // Not all data received. Get more.  
-                    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-                    new AsyncCallback(ReadCallback), state);
+                    try
+                    {
+                        handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                        new AsyncCallback(ReadCallback), state);
+                    }
+                    catch (SocketException se)
+                    {
+
+                    }
                 }
             }
         }
@@ -199,9 +206,16 @@ namespace ScannerDemo
             // Convert the string data to byte data using ASCII encoding.  
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            // Begin sending the data to the remote device.  
-            handler.BeginSend(byteData, 0, byteData.Length, 0,
-                new AsyncCallback(SendCallback), handler);
+            // Begin sending the data to the remote device.
+            try
+            {
+                handler.BeginSend(byteData, 0, byteData.Length, 0,
+                    new AsyncCallback(SendCallback), handler);
+            }
+            catch (SocketException se)
+            {
+                doWeHaveTheDocPath = true;
+            }
         }
 
         private void SendCallback(IAsyncResult ar)
