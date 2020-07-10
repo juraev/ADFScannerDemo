@@ -38,22 +38,18 @@ namespace ScannerDemo
                 return;
             }
 
-
             while (true)
             {
-                
+                Trace.Write("New Scanner Service");
                 MyScannerService service = new MyScannerService();
                 Thread thread = service.getThread();
                 service.startListening();
                 thread.Join();
                 Thread.Sleep(100);
-                Trace.Write("New Scanner Service");
             }
-
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
         }
+
+
 
         private static void createShortCut()
         {
