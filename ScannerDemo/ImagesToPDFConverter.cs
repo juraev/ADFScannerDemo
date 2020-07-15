@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using iTextSharp;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
-using System.IO;
+﻿using System.IO;
+using ImageMagick;
 
 namespace ScannerDemo
 {
@@ -21,18 +14,26 @@ namespace ScannerDemo
 
         public void getPDF(string path)
         {
-            Document doc = new Document();
             using (var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
             {
-                PdfWriter writer = PdfWriter.GetInstance(doc, stream);
-                doc.Open();
+
+                MagickImageCollection pdfDoc = new MagickImageCollection();
+
                 while(mImages.hasNext())
                 {
+
                     var ms = mImages.getNextImage();
-                    var image = Image.GetInstance(ms);
-                    doc.Add(image);
+
+                    MagickImage img = new MagickImage(ms);
+
+                    img.Format = MagickFormat.Pdf;
+
+                    pdfDoc.Add(img);
+
                 }
-                doc.Close();
+
+                pdfDoc.Write(stream);
+                stream.Close();
             }
         }
     }

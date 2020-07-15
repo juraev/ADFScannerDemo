@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using WIA;
 using System.Windows.Forms;
-using System.IO;
-using iTextSharp;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
+
 
 namespace ScannerDemo
 {
@@ -237,23 +230,7 @@ namespace ScannerDemo
         /// <returns>Images</returns>
         public Images ADFScan()
         {
-
-            //Choose Scanner
-            CommonDialogClass class1 = new CommonDialogClass();
             Images images = new Images();
-            Device d = class1.ShowSelectDevice(WiaDeviceType.UnspecifiedDeviceType, true, false);
-            if (d != null)
-            {
-                this.DeviceID = d.DeviceID;
-            }
-            else
-            {
-                //no scanner chosen
-                return null;
-            }
-
-
-
             WIA.CommonDialog WiaCommonDialog = new CommonDialogClass();
 
             bool hasMorePages = true;
@@ -264,21 +241,7 @@ namespace ScannerDemo
             {
                 //Create DeviceManager
                 DeviceManager manager = new DeviceManagerClass();
-                Device WiaDev = null;
-                foreach (DeviceInfo info in manager.DeviceInfos)
-                {
-                    if (info.DeviceID == this.DeviceID)
-                    {
-                        WIA.Properties infoprop = null;
-                        infoprop = info.Properties;
-
-                        //connect to scanner
-                        WiaDev = info.Connect();
-
-                        break;
-                    }
-                }
-
+                Device WiaDev = this._deviceInfo.Connect(); 
                 //Start Scan
 
                 WIA.ImageFile img = null;
@@ -286,6 +249,7 @@ namespace ScannerDemo
 
                 try
                 {
+                    AdjustScannerSettings(Item, resolution, 0, 0, width_pixel, height_pixel, 0, 0, color_mode);
 
                     img = (ImageFile)WiaCommonDialog.ShowTransfer(Item, wiaFormatJPEG, false);
                     res = img;
@@ -296,13 +260,13 @@ namespace ScannerDemo
                     //
 
                     //Save to file
-                    //string varimagefilename = "c:\\test" + x.tostring() + ".jpg";
-                    //if (file.exists(varimagefilename))
+                    //string varimagefilename = "C:\\Users\\gitarist\\Desktop\\img.jpg";
+                    //if (File.Exists(varimagefilename))
                     //{
                     //    //file exists, delete it
-                    //    file.delete(varimagefilename);
+                    //    File.Delete(varimagefilename);
                     //}
-                    //img.savefile(varimagefilename);
+                    //img.SaveFile(varimagefilename);
 
                     images.add(res);
 

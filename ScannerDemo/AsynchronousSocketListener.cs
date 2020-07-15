@@ -24,7 +24,7 @@ namespace ScannerDemo
     {
         private bool mRunning = true;
         private bool isScannerBusy = false;
-        private Form1 form;
+        private ScannerForm form;
         private volatile bool doWeHaveTheDocPath = false;
         private string theDocPath;
         private MyScannerService mContext;
@@ -128,7 +128,7 @@ namespace ScannerDemo
 
         private void setUpScanner()
         {
-            form = new Form1();
+            form = new ScannerForm();
             form.SetContext(this);
             theFormIsClosed = false;
             Application.Run(form);
